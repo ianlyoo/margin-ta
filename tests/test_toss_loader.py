@@ -54,3 +54,27 @@ class TossLoaderTests(unittest.TestCase):
             del os.environ["MARGIN_TA_TOSS_IMPORT"]
             toss_loader._client_module = None
             toss_loader._last_error = None
+
+    def test_toss_path_fallback_finds_module_off_standard_path(self):
+        import pathlib
+        import tempfile
+        d = pathlib.Path(tempfile.mkdtemp())
+        (d / "pathonly_toss.py").write_text(
+            "class TossClient:\n    pass\n"
+        )
+        # 표준 경로에 없고 MARGIN_TA_TOSS_PATH로만 찾을 수 있어야 함
+        os.environ["MARGIN_TA_TOSS_IMPORT"] = "pathonly_toss"
+        os.environ["MARGIN_TA_TOSS_PATH"] = str(d)
+        sys.modules.pop("pathonly_toss", None)
+        try:
+            module = toss_loader.load_toss_module()
+            self.assertIsNotNone(module)
+            self.assertTrue(hasattr(module, "TossClient"))
+        finally:
+            os.environ.pop("MARGIN_TA_TOSS_IMPORT", None)
+            os.environ.pop("MARGIN_TA_TOSS_PATH", None)
+            sys.modules.pop("pathonly_toss", None)
+            if str(d) in sys.path:
+                sys.path.remove(str(d))
+            toss_loader._client_module = None
+            toss_loader._last_error = None
