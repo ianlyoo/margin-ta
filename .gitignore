@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+build/
+dist/
+data/
+charts/
+.hermes/
+
+# Personal ops notes / design docs — kept on disk for production, not published
+SKILL.md
+references/
+docs/superpowers/
+.superpowers/
