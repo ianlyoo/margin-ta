@@ -21,18 +21,65 @@ from datetime import datetime
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 SKILL_DIR = os.path.dirname(SCRIPT_DIR)
-TICKERS_FILE = os.path.join(SKILL_DIR, "data", "nightly_tickers.json")
+sys.path.insert(0, SCRIPT_DIR)
+from paths import data_dir as _data_dir  # noqa: E402
+TICKERS_FILE = os.path.join(_data_dir(), "nightly_tickers.json")
 MARGIN_TA = os.path.join(SCRIPT_DIR, "margin_ta.py")
 DOWNLOAD_OHLCV = os.path.join(SCRIPT_DIR, "download_ohlcv_batch.py")
-VENV_PYTHON = os.path.join(SKILL_DIR, ".venv", "bin", "python3")
-CACHE_BASE = os.path.join(SKILL_DIR, "data", "ohlcv_cache")
+# Re-invoke whatever interpreter is running this script (works for pip installs,
+# arbitrary venv names, and `python -m`), overridable for unusual setups.
+VENV_PYTHON = os.environ.get("MARGIN_TA_PYTHON") or sys.executable
+CACHE_BASE = os.path.join(_data_dir(), "ohlcv_cache")
+
+
+def build_tickers_file():
+    """Fetch the S&P 500 + NASDAQ 100 constituents from Wikipedia into TICKERS_FILE.
+
+    Runs automatically the first time a scan is requested so the scanner works on a
+    fresh checkout. Supply your own TICKERS_FILE (a JSON object with a "combined"
+    list) to scan a custom watchlist instead.
+    """
+    import io
+
+    import pandas as pd
+    import requests
+
+    print("📥 워치리스트 없음 — S&P500 + NASDAQ100 구성종목 수집 중...", file=sys.stderr)
+    symbols: set[str] = set()
+    # Wikipedia rejects requests without a descriptive User-Agent.
+    headers = {"User-Agent": os.environ.get("SEC_USER_AGENT", "margin-ta/1.0 research@example.com")}
+    for url, col in (
+        ("https://en.wikipedia.org/wiki/List_of_S%26P_500_companies", "Symbol"),
+        ("https://en.wikipedia.org/wiki/Nasdaq-100", "Ticker"),
+    ):
+        try:
+            html = requests.get(url, headers=headers, timeout=30).text
+            for table in pd.read_html(io.StringIO(html)):
+                if col in table.columns:
+                    symbols.update(
+                        str(s).strip().replace(".", "-")
+                        for s in table[col].dropna().tolist()
+                    )
+                    break
+        except Exception as e:  # noqa: BLE001 — one source failing is survivable
+            print(f"   경고: {url} 수집 실패 ({type(e).__name__})", file=sys.stderr)
+    if not symbols:
+        print(
+            "ERROR: 워치리스트를 자동 생성하지 못했습니다. "
+            f'{TICKERS_FILE} 에 {{"combined": ["AAPL", ...]}} 형식으로 직접 만들어 주세요.',
+            file=sys.stderr,
+        )
+        sys.exit(1)
+    os.makedirs(os.path.dirname(TICKERS_FILE), exist_ok=True)
+    with open(TICKERS_FILE, "w") as f:
+        json.dump({"combined": sorted(symbols)}, f)
+    print(f"   ✅ {len(symbols)}개 종목 저장: {TICKERS_FILE}", file=sys.stderr)
 
 
 def load_tickers():
     """Load combined S&P 500 + NASDAQ 100 tickers from cached JSON."""
     if not os.path.exists(TICKERS_FILE):
-        print(f"ERROR: Tickers file not found: {TICKERS_FILE}", file=sys.stderr)
-        sys.exit(1)
+        build_tickers_file()
     with open(TICKERS_FILE) as f:
         data = json.load(f)
     tickers = data.get("combined", [])

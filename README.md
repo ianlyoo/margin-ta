@@ -88,9 +88,19 @@ pair works (BTC-USD, ETH-USD, SOL-USD, …).
 
 ### Nightly scan
 
-`scripts/scan_nightly.py` ranks a watchlist (S&P 500 + NASDAQ 100 by default)
-by Entry Score; `scripts/download_ohlcv_batch.py` pre-caches OHLCV so the scan
-doesn't hammer yfinance.
+`scripts/scan_nightly.py` ranks a watchlist by Entry Score;
+`scripts/download_ohlcv_batch.py` pre-caches OHLCV so the scan doesn't hammer
+yfinance.
+
+```bash
+python scripts/scan_nightly.py --markdown --top 5
+```
+
+The first run downloads the S&P 500 + NASDAQ 100 constituents into
+`<data dir>/nightly_tickers.json`. To scan your own list instead, write that
+file yourself as `{"combined": ["AAPL", "MSFT", ...]}`. A full scan takes a
+while — pre-caching with `download_ohlcv_batch.py` (or `--cache-ohlcv`) first
+makes repeat runs much faster.
 
 ## Configuration
 
@@ -103,7 +113,9 @@ All integrations are optional environment variables:
 | `KIS_ENV_FILE` | env file holding Korea Investment & Securities credentials (`APP_KEY`, `APP_SECRET`, `CANO`, `ACNT_PRDT_CD`, `URL_BASE` — `KIS_`-prefixed keys also accepted) for day/pre-market session quotes |
 | `KIS_APP_KEY`, `KIS_APP_SECRET`, `KIS_CANO`, `KIS_ACNT_PRDT_CD`, `KIS_URL_BASE` | Direct-env alternative to `KIS_ENV_FILE` (direct env wins) |
 | `MARGIN_TA_KIS_TOKEN_CACHE` | Path for the KIS OAuth token cache (default `~/.cache/margin-ta/kis_token.json`) |
-| `MARGIN_TA_GOOGLE_TOKEN` | Google Drive OAuth token file for `scan_nightly.py --gdrive-upload` |
+| `MARGIN_TA_GOOGLE_TOKEN` | Google Drive OAuth token file for `scan_nightly.py --gdrive-upload` (needs the `gdrive` extra: `pip install 'margin-ta[gdrive]'`) |
+| `MARGIN_TA_DATA_DIR`, `MARGIN_TA_CHARTS_DIR` | Where caches/snapshots and chart PNGs are written. Defaults to `<repo>/data` and `<repo>/charts` for a source checkout, or `~/.cache/margin-ta/…` when installed via pip |
+| `MARGIN_TA_PYTHON` | Interpreter the scanner re-invokes for subprocesses (defaults to the running one) |
 | `ALPHAVANTAGE_API_KEY`, `TRADIER_TOKEN`, `POLYGON_API_KEY`, `UW_API_KEY` | Options-chain data providers (each independently optional) |
 
 Credentials are read from the environment only — never hardcoded, never

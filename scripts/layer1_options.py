@@ -1089,7 +1089,8 @@ def _merge_keyed_features(public_features: list[dict], keyed_features: list[dict
 
 
 def _default_cache_dir() -> str:
-    return os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "data", "options_cache"))
+    from paths import data_dir as _data_dir
+    return os.path.join(_data_dir(), "options_cache")
 
 
 def _snapshot_path(cache_dir: str, symbol: str, stamp: str) -> str:

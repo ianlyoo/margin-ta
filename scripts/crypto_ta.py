@@ -83,8 +83,10 @@ def main():
         print(f"⚠️  '{symbol}' → '{symbol}-USD'로 자동 변환합니다.")
         symbol = f"{symbol}-USD"
 
-    data_dir = os.path.join(os.path.dirname(__file__), "..", "data")
-    chart_dir = os.path.join(os.path.dirname(__file__), "..", "charts")
+    from paths import data_dir as _data_dir
+    data_dir = _data_dir()
+    from paths import charts_dir as _charts_dir
+    chart_dir = _charts_dir()
     os.makedirs(data_dir, exist_ok=True)
     os.makedirs(chart_dir, exist_ok=True)
 

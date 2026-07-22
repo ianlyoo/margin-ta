@@ -189,7 +189,7 @@ def load_kis_credentials() -> dict[str, str] | None:
     Direct env: KIS_APP_KEY/KIS_APP_SECRET/KIS_CANO/KIS_ACNT_PRDT_CD (+ KIS_URL_BASE).
     KIS_ENV_FILE: env file where prefixed or unprefixed keys are allowed
     (APP_KEY/APP_SECRET/CANO/ACNT_PRDT_CD or their KIS_* variants).
-    Mirrors the K-invest kis_api credential resolution pattern.
+    Direct env vars win; an env file (KIS_ENV_FILE) is the fallback.
     """
     file_env: dict[str, str] = {}
     env_file = os.environ.get("KIS_ENV_FILE", "").strip()

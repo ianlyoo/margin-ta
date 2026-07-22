@@ -21,10 +21,14 @@ dependencies = [
   "pandas>=2.0",
   "numpy>=1.24",
   "requests>=2.28",
+  # layer5_output imports rich at module load (margin_ta imports layer5_output),
+  # so it is required even for --json runs.
+  "rich>=13",
 ]
 
 [project.optional-dependencies]
-console = ["rich>=13"]
+# Google Drive upload in scan_nightly (only used when MARGIN_TA_GOOGLE_TOKEN is set)
+gdrive = ["google-auth>=2.0", "google-api-python-client>=2.0"]
 
 [project.urls]
 Homepage = "https://github.com/ianlyoo/margin-ta"

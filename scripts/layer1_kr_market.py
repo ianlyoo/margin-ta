@@ -11,10 +11,11 @@ from datetime import datetime, timedelta
 import numpy as np
 import pandas as pd
 
+from paths import data_dir as _data_dir
 
 KOSPI_SYMBOL = "^KS11"
 KOSDAQ_SYMBOL = "^KQ11"
-CACHE_DIR_DEFAULT = os.path.join(os.path.dirname(__file__), "..", "data")
+CACHE_DIR_DEFAULT = _data_dir()
 CACHE_MAX_AGE_HOURS = 4
 
 

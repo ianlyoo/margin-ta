@@ -13,8 +13,10 @@ from datetime import datetime
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 SKILL_DIR = os.path.dirname(SCRIPT_DIR)
-TICKERS_FILE = os.path.join(SKILL_DIR, "data", "nightly_tickers.json")
-OUTPUT_FILE = os.path.join(SKILL_DIR, "data", "market_breadth_cache.json")
+sys.path.insert(0, SCRIPT_DIR)
+from paths import data_dir as _data_dir  # noqa: E402
+TICKERS_FILE = os.path.join(_data_dir(), "nightly_tickers.json")
+OUTPUT_FILE = os.path.join(_data_dir(), "market_breadth_cache.json")
 
 sys.path.insert(0, SCRIPT_DIR)
 from layer1_market import compute_market_breadth  # noqa: E402

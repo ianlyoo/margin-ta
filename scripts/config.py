@@ -1,7 +1,4 @@
-"""Central tunables for multi-horizon analysis, consensus, and S/R tiering.
-
-Spec: docs/superpowers/specs/2026-07-17-multi-horizon-upgrade-design.md
-"""
+"""Central tunables for multi-horizon analysis, consensus, and S/R tiering."""
 
 # ── Horizons ────────────────────────────────────────────
 HORIZONS = {

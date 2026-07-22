@@ -16,7 +16,8 @@ from datetime import datetime, timedelta
 import pandas as pd
 
 
-_CACHE_DIR = os.path.join(os.path.dirname(__file__), "..", "data")
+from paths import data_dir as _data_dir
+_CACHE_DIR = _data_dir()
 
 
 def _load_cache(cache_path: str, max_age_hours: int) -> dict | None:

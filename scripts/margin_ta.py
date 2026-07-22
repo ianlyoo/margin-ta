@@ -246,7 +246,8 @@ def main():
             if not args.quiet and combined_market.get("trend_regime"):
                 print(f"    ✅ KOSPI {combined_market['trend_label']} / 변동성 {combined_market.get('volatility_20d', '?')}%")
         else:
-            data_dir = os.path.join(os.path.dirname(__file__), "..", "data")
+            from paths import data_dir as _data_dir
+            data_dir = _data_dir()
             cache_path = os.path.join(data_dir, "market_regime_cache.json")
             breadth_cache_path = os.path.join(data_dir, "market_breadth_cache.json")
             market_regime = fetch_vix_regime(cache_path=cache_path)
@@ -262,7 +263,8 @@ def main():
     sector_risk_for_symbol = None
     if not args.no_market:
         try:
-            data_dir_mr = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data")
+            from paths import data_dir as _data_dir
+            data_dir_mr = _data_dir()
             market_risk = build_market_risk(
                 include_kr=is_korean,
                 cache_path=os.path.join(data_dir_mr, "market_risk_cache.json"),
@@ -357,7 +359,7 @@ def main():
             if not args.quiet:
                 print("    옵션 체인/옵션맵 분석 중...")
             options_cache_dir = args.options_cache_dir or os.path.join(
-                os.path.dirname(__file__), "..", "data", "options_cache"
+                __import__("paths").data_dir(), "options_cache"
             )
             try:
                 options_data = fetch_options_analysis(
@@ -535,7 +537,8 @@ def main():
     # Chart PNG
     chart_path = None
     if args.chart:
-        chart_dir = os.path.join(os.path.dirname(__file__), "..", "charts")
+        from paths import charts_dir as _charts_dir
+        chart_dir = _charts_dir()
         chart_path = generate_chart_png(
             df,
             symbol,
@@ -559,7 +562,8 @@ def main():
     if args.save:
         import json
 
-        data_dir = os.path.join(os.path.dirname(__file__), "..", "data")
+        from paths import data_dir as _data_dir
+        data_dir = _data_dir()
         os.makedirs(data_dir, exist_ok=True)
         json_path = os.path.join(
             data_dir, f"{symbol}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"

@@ -23,14 +23,19 @@ warnings.filterwarnings("ignore")
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 SKILL_DIR = os.path.dirname(SCRIPT_DIR)
-TICKERS_FILE = os.path.join(SKILL_DIR, "data", "nightly_tickers.json")
-CACHE_BASE = os.path.join(SKILL_DIR, "data", "ohlcv_cache")
+sys.path.insert(0, SCRIPT_DIR)
+from paths import data_dir as _data_dir  # noqa: E402
+TICKERS_FILE = os.path.join(_data_dir(), "nightly_tickers.json")
+CACHE_BASE = os.path.join(_data_dir(), "ohlcv_cache")
 
 
 def load_tickers():
     if not os.path.exists(TICKERS_FILE):
-        print(f"ERROR: Tickers file not found: {TICKERS_FILE}", file=sys.stderr)
-        sys.exit(1)
+        # Same watchlist bootstrap the scanner uses (S&P500 + NASDAQ100).
+        sys.path.insert(0, SCRIPT_DIR)
+        from scan_nightly import build_tickers_file
+
+        build_tickers_file()
     with open(TICKERS_FILE) as f:
         data = json.load(f)
     tickers = data.get("combined", [])

@@ -52,7 +52,8 @@ def main() -> int:
     ap.add_argument("--no-kr", action="store_true")
     args = ap.parse_args()
 
-    data_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data")
+    from paths import data_dir as _data_dir
+    data_dir = _data_dir()
     cache_path = os.path.join(data_dir, "market_risk_cache.json")
     breadth_cache_path = os.path.join(data_dir, "market_breadth_cache.json")
     result = build_market_risk(include_kr=not args.no_kr, cache_path=cache_path,
