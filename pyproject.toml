@@ -5,12 +5,12 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "margin-ta"
 version = "3.0.0"
-description = "Read-only technical-analysis pipeline: multi-horizon stances, indicator consensus, tiered S/R, and a market/sector risk dashboard"
+description = "Read-only technical-analysis pipeline — generate multi-horizon stances with indicator consensus, tiered S/R and market/sector risk dashboard."
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
-authors = [{ name = "AhnRyu" }]
-keywords = ["technical-analysis", "stock-analysis", "trading", "mcp", "python"]
+authors = [{ name = "AhnRyu", email = "ianlyoo@github.com" }]
+keywords = ["developer-tools", "indicator-consensus", "market-dashboard", "mcp", "multi-horizon", "python", "quant", "risk-management", "stock-analysis", "support-resistance", "technical-analysis", "trading"]
 dependencies = [
   "yfinance>=1.3",
   "pykrx>=1.2",
@@ -32,6 +32,9 @@ gdrive = ["google-auth>=2.0", "google-api-python-client>=2.0"]
 
 [project.urls]
 Homepage = "https://github.com/ianlyoo/margin-ta"
+Repository = "https://github.com/ianlyoo/margin-ta"
+Issues = "https://github.com/ianlyoo/margin-ta/issues"
+Documentation = "https://ianlyoo.github.io/margin-ta/"
 
 [project.scripts]
 margin-ta = "margin_ta:main"

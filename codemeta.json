@@ -1,0 +1,47 @@
+{
+  "@context": "https://doi.org/10.5438/crossref",
+  "@type": "SoftwareSourceCode",
+  "name": "margin-ta",
+  "description": "Read-only technical-analysis pipeline — generate multi-horizon stances with indicator consensus, tiered S/R and market/sector risk dashboard.",
+  "version": "3.0.0",
+  "license": "https://spdx.org/licenses/MIT",
+  "codeRepository": "https://github.com/ianlyoo/margin-ta",
+  "url": "https://github.com/ianlyoo/margin-ta",
+  "homepage": "https://ianlyoo.github.io/margin-ta/",
+  "issueTracker": "https://github.com/ianlyoo/margin-ta/issues",
+  "author": [
+    {
+      "@type": "Person",
+      "givenName": "Ian",
+      "familyName": "Yoo",
+      "alternateName": "ianlyoo"
+    }
+  ],
+  "provider": {
+    "@type": "Person",
+    "givenName": "Ian",
+    "familyName": "Yoo",
+    "alternateName": "ianlyoo"
+  },
+  "programmingLanguage": "Python",
+  "runtimePlatform": "Python >=3.10",
+  "keywords": [
+    "developer-tools",
+    "indicator-consensus",
+    "market-dashboard",
+    "mcp",
+    "multi-horizon",
+    "python",
+    "quant",
+    "risk-management",
+    "stock-analysis",
+    "support-resistance",
+    "technical-analysis",
+    "trading"
+  ],
+  "applicationCategory": "developer-tools",
+  "operatingSystem": "Cross-platform",
+  "datePublished": "2026-08-26",
+  "dateCreated": "2026-08-26",
+  "isAccessibleForFree": true
+}

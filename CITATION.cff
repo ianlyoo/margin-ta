@@ -1,0 +1,36 @@
+# This file is for citation metadata — https://citation-file-format.github.io/
+cff-version: 1.2.0
+message: "If you use margin-ta, please cite it as below."
+title: "margin-ta"
+abstract: "Read-only technical-analysis pipeline — generate multi-horizon stances with indicator consensus, tiered S/R and market/sector risk dashboard."
+version: 3.0.0
+date-released: 2026-08-26
+license: MIT
+type: software
+authors:
+  - family-names: "Yoo"
+    given-names: "Ian"
+    alias: "ianlyoo"
+repository-code: "https://github.com/ianlyoo/margin-ta"
+url: "https://github.com/ianlyoo/margin-ta"
+homepage: "https://ianlyoo.github.io/margin-ta/"
+keywords:
+  - developer-tools
+  - indicator-consensus
+  - market-dashboard
+  - mcp
+  - multi-horizon
+  - python
+  - quant
+  - risk-management
+  - stock-analysis
+  - support-resistance
+  - technical-analysis
+  - trading
+identifiers:
+  - type: url
+    value: "https://github.com/ianlyoo/margin-ta"
+    description: "GitHub repository"
+  - type: url
+    value: "https://ianlyoo.github.io/margin-ta/"
+    description: "GitHub Pages"
