@@ -1,11 +1,11 @@
-[build-system]
+﻿[build-system]
 requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "margin-ta"
 version = "3.0.0"
-description = "Read-only technical-analysis pipeline — generate multi-horizon stances with indicator consensus, tiered S/R and market/sector risk dashboard."
+description = "Read-only technical-analysis pipeline ??generate multi-horizon stances with indicator consensus, tiered S/R and market/sector risk dashboard."
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
@@ -77,7 +77,7 @@ py-modules = [
 # Pre-existing patterns in the pipeline scripts (score/detail one-liners,
 # kept imports for the interactive workflow). Ignored repo-wide so CI lints
 # new code without rewriting production scripts.
-ignore = [
+ignore = ["EXE001", 
     "E702", "E741", "E401", "F401", "F541", "F841",
     # pre-existing non-trivial lint (import sorting fixed, rest ignored for CI green)
     "BLE001", "C408", "DTZ003", "DTZ005", "DTZ007", "DTZ011",
@@ -87,3 +87,4 @@ ignore = [
 
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = ["E402"]
+
