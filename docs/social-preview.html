@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1280">
+<title>margin-ta — social preview 1280x640</title>
+<!--
+  Deterministic source for docs/assets/social-preview.png
+  Fixed dimensions 1280x640, solid background, high contrast.
+  Render via: node scripts/build-social-preview.mjs
+  Generation date pinned to 2023-01-01 for reproducibility — not a live date.
+-->
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 1280px;
+    height: 640px;
+    overflow: hidden;
+    background: #0f172a;
+  }
+  body {
+    font-family: ui-sans-system, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+    background: #0f172a;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 64px 72px;
+  }
+  .brand {
+    font-size: 64px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: #ffffff;
+  }
+  .positioning {
+    margin-top: 20px;
+    font-size: 26px;
+    line-height: 1.35;
+    font-weight: 500;
+    color: #e2e8f0;
+    max-width: 1080px;
+  }
+  .cue {
+    margin-top: 28px;
+    display: inline-block;
+    font-size: 16px;
+    line-height: 1.4;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #0f172a;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 8px 14px;
+    border-radius: 6px;
+  }
+  .footer {
+    margin-top: 36px;
+    font-size: 15px;
+    color: #94a3b8;
+    letter-spacing: 0.02em;
+  }
+</style>
+</head>
+<body>
+  <div class="brand">margin-ta</div>
+  <div class="positioning">Read-only technical-analysis pipeline — multi-horizon stances with indicator consensus</div>
+  <div class="cue">measured workloads — not guaranteed</div>
+  <div class="footer">github.com/ianlyoo/margin-ta &nbsp;·&nbsp; MIT &nbsp;·&nbsp; Python</div>
+</body>
+</html>
