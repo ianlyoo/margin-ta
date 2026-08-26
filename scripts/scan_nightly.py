@@ -16,13 +16,19 @@ Usage:
     python3 scan_nightly.py --cache-ohlcv --save-results data/nightly_results/ --gdrive-upload --markdown --top 5
 """
 
-import subprocess, json, sys, os, time, argparse
+import argparse
+import json
+import os
+import subprocess
+import sys
+import time
 from datetime import datetime
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 SKILL_DIR = os.path.dirname(SCRIPT_DIR)
 sys.path.insert(0, SCRIPT_DIR)
 from paths import data_dir as _data_dir  # noqa: E402
+
 TICKERS_FILE = os.path.join(_data_dir(), "nightly_tickers.json")
 MARGIN_TA = os.path.join(SCRIPT_DIR, "margin_ta.py")
 DOWNLOAD_OHLCV = os.path.join(SCRIPT_DIR, "download_ohlcv_batch.py")

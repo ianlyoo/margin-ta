@@ -14,9 +14,8 @@ import os
 from datetime import datetime, timedelta
 
 import pandas as pd
-
-
 from paths import data_dir as _data_dir
+
 _CACHE_DIR = _data_dir()
 
 

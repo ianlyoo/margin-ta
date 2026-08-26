@@ -6,15 +6,19 @@ Usage: margin_ta.py SYMBOL [--save] [--chart]
 미국주식 매집 결정 후 진입 타이밍을 위한 기술적 분석 도구.
 6-Layer Pipeline: Data → Indicators → Signals → Pricing → Output
 """
-import sys
-import os
 import argparse
+import os
+import sys
 from datetime import datetime
 
 # 스크립트 디렉토리를 path에 추가 (같은 디렉토리의 layer 모듈 import용)
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from layer1_data import fetch_ohlcv_data, fetch_tradingview_data, resolve_yfinance_candidates
+from layer1_data import (
+    fetch_ohlcv_data,
+    fetch_tradingview_data,
+    resolve_yfinance_candidates,
+)
 from layer1_flow import fetch_external_flow
 from layer1_kr_market import fetch_korea_market_regime
 from layer1_market import combine_market_regimes, fetch_vix_regime, load_market_breadth
@@ -22,21 +26,30 @@ from layer1_options import fetch_options_analysis, legacy_flow_options
 from layer1_ownership import fetch_beneficial_ownership
 from layer1_session import fetch_session_quote
 from layer2_indicators import compute_all_indicators, compute_derived
-from layer3_liquidity import build_liquidity_package, liquidity_confluence, liquidity_levels
+from layer3_liquidity import (
+    build_liquidity_package,
+    liquidity_confluence,
+    liquidity_levels,
+)
 from layer3_signals import (
-    find_horizontal_sr,
-    find_dynamic_sr,
-    find_fibonacci_levels,
     calculate_entry_score,
     compile_levels,
+    find_dynamic_sr,
+    find_fibonacci_levels,
+    find_horizontal_sr,
 )
 from layer4_pricing import (
-    determine_entry_strategies,
     build_entry_plans,
-    calculate_targets,
     calculate_risk_reward,
+    calculate_targets,
+    determine_entry_strategies,
 )
-from layer5_output import print_margin_analysis, generate_chart_png, generate_tradingview_link, format_discord_output
+from layer5_output import (
+    format_discord_output,
+    generate_chart_png,
+    generate_tradingview_link,
+    print_margin_analysis,
+)
 from market_risk import build_market_risk
 
 
@@ -56,6 +69,7 @@ def _fmt_price(value: float, currency: str = "USD") -> str:
 def load_from_ohlcv_cache(symbol: str, cache_dir: str) -> dict:
     """OHLCV 캐시 JSON에서 데이터를 로드하여 fetch_yfinance_data()와 동일한 형식으로 반환"""
     import json as _json
+
     import pandas as _pd
 
     cache_file = os.path.join(cache_dir, f"{symbol}.json")
@@ -414,7 +428,12 @@ def main():
 
         from layer3_consensus import add_horizon_conflict, build_consensus
         from layer3_horizons import build_horizons
-        from layer3_signals import build_sr_tiers, find_monthly_swings, find_weekly_pivots, tier_levels
+        from layer3_signals import (
+            build_sr_tiers,
+            find_monthly_swings,
+            find_weekly_pivots,
+            tier_levels,
+        )
         from timeframes import resample_ohlcv
 
         contribs = entry_score.pop("contribs", [])

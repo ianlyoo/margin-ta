@@ -2,15 +2,16 @@
 Layer 1 — Data: OHLCV + TradingView 교차검증
 yfinance로 2년 daily 데이터 수집, TradingView TA로 검증.
 """
-import re
-import os
 import io
-from pathlib import Path
-from contextlib import redirect_stderr, redirect_stdout
-import yfinance as yf
-import pandas as pd
+import os
+import re
 import warnings
+from contextlib import redirect_stderr, redirect_stdout
 from datetime import datetime, timedelta
+from pathlib import Path
+
+import pandas as pd
+import yfinance as yf
 
 warnings.filterwarnings("ignore")
 
@@ -188,7 +189,8 @@ def fetch_toss_data(symbol: str, market: str | None = "auto") -> dict:
     result = {"df": None, "info_summary": {}, "warnings": []}
     resolved = _base_market_metadata(symbol, market=market)
 
-    from toss_loader import get_toss_client, _last_error as _toss_last_error
+    from toss_loader import _last_error as _toss_last_error
+    from toss_loader import get_toss_client
     client = get_toss_client()
     if client is None:
         result["warnings"].append(
@@ -516,7 +518,7 @@ def fetch_tradingview_data(symbol: str, exchange: str, screener: str | None = No
         dict with 'summary', 'indicators', 'error'
     """
     try:
-        from tradingview_ta import TA_Handler, Interval
+        from tradingview_ta import Interval, TA_Handler
         tv_symbol = _kr_base_symbol(symbol) if _is_kr_symbol(symbol) or str(exchange).upper() in {"KRX", "KOSPI", "KOSDAQ"} else str(symbol).upper()
         tv_exchange = "KRX" if str(exchange).upper() in {"KRX", "KOSPI", "KOSDAQ"} else exchange
         tv_screener = screener or ("korea" if tv_exchange == "KRX" else "america")

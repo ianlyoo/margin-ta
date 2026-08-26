@@ -2,10 +2,9 @@
 from __future__ import annotations
 
 import pandas as pd
+from config import HORIZONS, STANCE_BEAR_MAX, STANCE_BULL_MIN
 from ta.momentum import RSIIndicator
 from ta.trend import MACD
-
-from config import HORIZONS, STANCE_BEAR_MAX, STANCE_BULL_MIN
 from timeframes import last_bar_incomplete, resample_ohlcv
 
 

@@ -8,7 +8,7 @@ import pandas as pd
 SCRIPT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "scripts"))
 sys.path.insert(0, SCRIPT_DIR)
 
-from layer3_horizons import build_horizons, _swing_structure  # noqa: E402
+from layer3_horizons import _swing_structure, build_horizons  # noqa: E402
 
 
 def _trend_daily(days: int, start_price: float = 50.0, daily_ret: float = 0.002) -> pd.DataFrame:

@@ -3,9 +3,10 @@ Layer 2 — Technical Indicators: ta (bukosabino) + manual implementations + TA-
 pandas-ta는 Python 3.12+ 요구하므로, ta + 수동 계산으로 대체.
 TA-Lib로 13종 캔들스틱 패턴 검출.
 """
-import pandas as pd
-import numpy as np
 import warnings
+
+import numpy as np
+import pandas as pd
 
 warnings.filterwarnings("ignore")
 
@@ -102,20 +103,39 @@ def compute_all_indicators(df: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()
 
     try:
-        from ta.trend import (
-            MACD, EMAIndicator, SMAIndicator, ADXIndicator, IchimokuIndicator,
-            CCIIndicator, PSARIndicator, AroonIndicator, VortexIndicator, DPOIndicator,
-        )
         from ta.momentum import (
-            RSIIndicator, StochasticOscillator, WilliamsRIndicator, UltimateOscillator,
-            StochRSIIndicator, AwesomeOscillatorIndicator,
+            AwesomeOscillatorIndicator,
+            RSIIndicator,
+            StochasticOscillator,
+            StochRSIIndicator,
+            UltimateOscillator,
+            WilliamsRIndicator,
+        )
+        from ta.trend import (
+            MACD,
+            ADXIndicator,
+            AroonIndicator,
+            CCIIndicator,
+            DPOIndicator,
+            EMAIndicator,
+            IchimokuIndicator,
+            PSARIndicator,
+            SMAIndicator,
+            VortexIndicator,
         )
         from ta.volatility import (
-            BollingerBands, AverageTrueRange, DonchianChannel, KeltnerChannel,
+            AverageTrueRange,
+            BollingerBands,
+            DonchianChannel,
+            KeltnerChannel,
         )
         from ta.volume import (
-            OnBalanceVolumeIndicator, MFIIndicator, ChaikinMoneyFlowIndicator,
-            VolumePriceTrendIndicator, AccDistIndexIndicator, ForceIndexIndicator,
+            AccDistIndexIndicator,
+            ChaikinMoneyFlowIndicator,
+            ForceIndexIndicator,
+            MFIIndicator,
+            OnBalanceVolumeIndicator,
+            VolumePriceTrendIndicator,
         )
 
         # === TREND ===

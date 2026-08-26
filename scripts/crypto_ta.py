@@ -10,36 +10,43 @@ Usage:
 
 Supported symbols: Any yfinance crypto pair (BTC-USD, ETH-USD, SOL-USD, etc.)
 """
-import sys
-import os
 import argparse
+import os
+import sys
 from datetime import datetime
 
 # Add script directory to path for layer module imports
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from layer1_data import fetch_yfinance_data, fetch_tradingview_data
+from layer1_crypto_market import (
+    combine_crypto_regimes,
+    fetch_btc_dominance,
+    fetch_fear_greed,
+)
+from layer1_data import fetch_tradingview_data, fetch_yfinance_data
 from layer2_indicators import compute_all_indicators, compute_derived
-from layer3_liquidity import build_liquidity_package, liquidity_confluence, liquidity_levels
+from layer3_liquidity import (
+    build_liquidity_package,
+    liquidity_confluence,
+    liquidity_levels,
+)
 from layer3_signals import (
-    find_horizontal_sr,
-    find_dynamic_sr,
-    find_fibonacci_levels,
     calculate_entry_score,
     compile_levels,
+    find_dynamic_sr,
+    find_fibonacci_levels,
+    find_horizontal_sr,
 )
 from layer4_pricing import (
-    determine_entry_strategies,
-    calculate_targets,
     calculate_risk_reward,
+    calculate_targets,
+    determine_entry_strategies,
 )
-from layer5_output import print_margin_analysis, generate_chart_png, generate_tradingview_link
-from layer1_crypto_market import (
-    fetch_fear_greed,
-    fetch_btc_dominance,
-    combine_crypto_regimes,
+from layer5_output import (
+    generate_chart_png,
+    generate_tradingview_link,
+    print_margin_analysis,
 )
-
 
 # ═══════════════════════════════════════════════════════
 # TradingView symbol mapping for crypto

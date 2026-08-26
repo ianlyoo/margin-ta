@@ -19,7 +19,6 @@ from zoneinfo import ZoneInfo
 import requests
 import yfinance as yf
 
-
 KST = ZoneInfo("Asia/Seoul")
 NEW_YORK = ZoneInfo("America/New_York")
 KIS_DEFAULT_URL_BASE = "https://openapi.koreainvestment.com:9443"
@@ -564,7 +563,8 @@ def fetch_toss_prices(symbols: list[str]) -> dict[str, dict[str, Any]]:
     미설정/로드 실패 시 ok=False + 경고로 우아하게 실패한다.
     """
     result = {}
-    from toss_loader import get_toss_client, _last_error as _toss_last_error
+    from toss_loader import _last_error as _toss_last_error
+    from toss_loader import get_toss_client
     client = get_toss_client()
     if client is None:
         message = (

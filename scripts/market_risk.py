@@ -10,8 +10,11 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from layer1_market import _load_cache, _save_cache
 from layer1_risk import fetch_risk_data
-from layer3_risk import (compute_market_indicators, compute_market_risk_score,
-                         compute_sector_risk)
+from layer3_risk import (
+    compute_market_indicators,
+    compute_market_risk_score,
+    compute_sector_risk,
+)
 
 
 def build_market_risk(include_kr: bool = True, cache_path: str | None = None,

@@ -10,9 +10,10 @@ Output: Rich 콘솔 테이블 없이 plain-text 요약 (RSI/MACD/BB/SR/추세 �
 margin-ta의 전달 가이드라인(Delivery Guidelines)에 맞춰 해석 레이어를 반드시 추가할 것.
 """
 import sys
-import yfinance as yf
-import numpy as np
 from datetime import datetime
+
+import numpy as np
+import yfinance as yf
 
 
 def compute_rsi(series, period=14):

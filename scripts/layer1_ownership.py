@@ -11,7 +11,6 @@ from datetime import date, datetime, timedelta
 from html import unescape
 from urllib.request import Request, urlopen
 
-
 SEC_USER_AGENT = os.environ.get("SEC_USER_AGENT", "margin-ta/1.0 research@example.com")
 SEC_BENEFICIAL_OWNERSHIP_FORMS = {"SC 13D", "SC 13D/A", "SC 13G", "SC 13G/A"}
 _TICKER_CIK_CACHE: dict[str, str] | None = None

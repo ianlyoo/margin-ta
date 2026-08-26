@@ -8,7 +8,10 @@ import pandas as pd
 SCRIPT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "scripts"))
 sys.path.insert(0, SCRIPT_DIR)
 
-from layer3_risk import compute_market_indicators, compute_market_risk_score  # noqa: E402
+from layer3_risk import (  # noqa: E402
+    compute_market_indicators,
+    compute_market_risk_score,
+)
 
 
 def _flat(val, n=1300):

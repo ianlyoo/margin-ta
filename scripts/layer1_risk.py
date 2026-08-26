@@ -5,7 +5,6 @@ from datetime import datetime
 
 import pandas as pd
 import yfinance as yf
-
 from config import BUFFETT_GDP_OVERRIDE, FRED_SERIES, RISK_TICKERS, SECTOR_UNIVERSE
 from fred_client import fetch_fred_series
 from layer1_market import load_market_breadth

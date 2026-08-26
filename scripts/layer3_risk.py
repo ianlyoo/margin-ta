@@ -2,10 +2,14 @@
 from __future__ import annotations
 
 import pandas as pd
+from config import (
+    RISK_GROUP_WEIGHTS,
+    RISK_SIGNAL_RULES,
+    SECTOR_COMPONENT_WEIGHTS,
+    SECTOR_UNIVERSE,
+    SIGNAL_SCORE_MAP,
+)
 from ta.trend import CCIIndicator
-
-from config import (RISK_GROUP_WEIGHTS, RISK_SIGNAL_RULES, SIGNAL_SCORE_MAP,
-                    SECTOR_COMPONENT_WEIGHTS, SECTOR_UNIVERSE)
 from timeframes import resample_ohlcv
 
 MARKET_GROUPS = {

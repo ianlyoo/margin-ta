@@ -2,10 +2,10 @@
 Layer 3 — Signal: 지지/저항 탐지 + Entry Score
 Horizontal S/R, Dynamic MA S/R, Fibonacci Retracement, Entry Score (0-100)
 """
-import numpy as np
-import pandas as pd
 from datetime import datetime
 
+import numpy as np
+import pandas as pd
 from config import SCORE_CATEGORY_CAPS
 from layer1_options import compute_options_score_overlay
 
@@ -1071,8 +1071,11 @@ def _tier_of(level: dict) -> str:
 
 
 def tier_levels(all_levels, weekly, monthly, df_daily, current_price):
-    from config import (CROSS_TIER_DEDUPE_PCT, NEAR_BAND_MAX_PER_SIDE,
-                        NEAR_BAND_WIDTH_PCT)
+    from config import (
+        CROSS_TIER_DEDUPE_PCT,
+        NEAR_BAND_MAX_PER_SIDE,
+        NEAR_BAND_WIDTH_PCT,
+    )
     for side in ("supports", "resistances"):
         for lv in all_levels[side]:
             lv["tier"] = _tier_of(lv)

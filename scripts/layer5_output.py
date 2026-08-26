@@ -1,14 +1,14 @@
 """
 Layer 5 — Output: Rich 콘솔 테이블 + 매트플롯립 차트 + TradingView 링크
 """
-from datetime import datetime
-from rich.console import Console
-from rich.table import Table
-from rich.panel import Panel
-from rich.text import Text
-from rich import box
 import os
+from datetime import datetime
 
+from rich import box
+from rich.console import Console
+from rich.panel import Panel
+from rich.table import Table
+from rich.text import Text
 
 # ─── 전략 유형 메타 (layer4와 동기화) ────────────────────────────
 
@@ -945,8 +945,8 @@ def generate_chart_png(
     try:
         import matplotlib
         matplotlib.use("Agg")
-        import matplotlib.pyplot as plt
         import matplotlib.dates as mdates
+        import matplotlib.pyplot as plt
         currency = str(currency or "USD").upper()
 
         def _fmt_chart_price(value):

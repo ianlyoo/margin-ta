@@ -10,7 +10,6 @@ from datetime import datetime, timedelta
 
 import numpy as np
 import pandas as pd
-
 from paths import data_dir as _data_dir
 
 KOSPI_SYMBOL = "^KS11"

@@ -3,7 +3,6 @@ import sys
 import unittest
 from datetime import datetime, timedelta, timezone
 
-
 SCRIPT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "scripts"))
 sys.path.insert(0, SCRIPT_DIR)
 

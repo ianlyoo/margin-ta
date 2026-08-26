@@ -9,22 +9,24 @@ Usage:
     python3 download_ohlcv_batch.py [--date YYYY-MM-DD] [--delay 0.3] [--batch-size 50]
 """
 
+import argparse
 import json
 import os
 import sys
 import time
-import argparse
-from datetime import datetime, date
-
-import yfinance as yf
-import pandas as pd
 import warnings
+from datetime import date, datetime
+
+import pandas as pd
+import yfinance as yf
+
 warnings.filterwarnings("ignore")
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 SKILL_DIR = os.path.dirname(SCRIPT_DIR)
 sys.path.insert(0, SCRIPT_DIR)
 from paths import data_dir as _data_dir  # noqa: E402
+
 TICKERS_FILE = os.path.join(_data_dir(), "nightly_tickers.json")
 CACHE_BASE = os.path.join(_data_dir(), "ohlcv_cache")
 

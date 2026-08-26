@@ -17,7 +17,6 @@ from datetime import datetime, timezone
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
-
 USER_AGENT = "margin-ta/options/3.3 (personal analysis; public endpoints only)"
 CONTRACT_MULTIPLIER = 100
 

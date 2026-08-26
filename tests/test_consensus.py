@@ -8,7 +8,11 @@ import pandas as pd
 SCRIPT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "scripts"))
 sys.path.insert(0, SCRIPT_DIR)
 
-from layer3_consensus import add_horizon_conflict, build_consensus, detect_rsi_divergence  # noqa: E402
+from layer3_consensus import (  # noqa: E402
+    add_horizon_conflict,
+    build_consensus,
+    detect_rsi_divergence,
+)
 
 
 def _c(cat, ind, pts):

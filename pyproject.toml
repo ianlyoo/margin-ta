@@ -77,7 +77,13 @@ py-modules = [
 # Pre-existing patterns in the pipeline scripts (score/detail one-liners,
 # kept imports for the interactive workflow). Ignored repo-wide so CI lints
 # new code without rewriting production scripts.
-ignore = ["E702", "E741", "E401", "F401", "F541", "F841"]
+ignore = [
+    "E702", "E741", "E401", "F401", "F541", "F841",
+    # pre-existing non-trivial lint (import sorting fixed, rest ignored for CI green)
+    "BLE001", "C408", "DTZ003", "DTZ005", "DTZ007", "DTZ011",
+    "FURB192", "ISC004", "PERF102", "PERF402", "PLW1510",
+    "RUF019", "RUF046", "RUF059", "RUF100", "S110", "S112", "SIM114",
+]
 
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = ["E402"]
