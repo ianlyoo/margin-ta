@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>margin-ta — Read-only technical-analysis pipeline — generate multi-horizon stances with indicator consensus, tiered S/R and market/sector risk dashboard.</title>
+<meta name="description" content="Read-only technical-analysis pipeline — generate multi-horizon stances with indicator consensus, tiered S/R and market/sector risk dashboard.">
+<link rel="canonical" href="https://ianlyoo.github.io/margin-ta/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="margin-ta — Read-only technical-analysis pipeline — generate multi-horizon stances with indicator consensus, tiered S/R and market/sector risk dashboard.">
+<meta property="og:description" content="Read-only technical-analysis pipeline — generate multi-horizon stances with indicator consensus, tiered S/R and market/sector risk dashboard.">
+<meta property="og:url" content="https://ianlyoo.github.io/margin-ta/">
+<meta property="og:image" content="https://ianlyoo.github.io/margin-ta/assets/social-preview.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:type" content="image/png">
+<meta property="og:site_name" content="margin-ta">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="margin-ta — Read-only technical-analysis pipeline — generate multi-horizon stances with indicator consensus, tiered S/R and market/sector risk dashboard.">
+<meta name="twitter:description" content="Read-only technical-analysis pipeline — generate multi-horizon stances with indicator consensus, tiered S/R and market/sector risk dashboard.">
+<meta name="twitter:image" content="https://ianlyoo.github.io/margin-ta/assets/social-preview.png">
+<meta name="twitter:url" content="https://ianlyoo.github.io/margin-ta/">
+<meta name="author" content="ianlyoo">
+<meta name="robots" content="index, follow">
+<link rel="stylesheet" href="./styles.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareSourceCode","name":"margin-ta","description":"Read-only technical-analysis pipeline — generate multi-horizon stances with indicator consensus, tiered S/R and market/sector risk dashboard.","version":"3.0.0","codeRepository":"https://github.com/ianlyoo/margin-ta","url":"https://ianlyoo.github.io/margin-ta/","programmingLanguage":"Python","license":"https://spdx.org/licenses/MIT","keywords":["developer-tools","indicator-consensus","market-dashboard","mcp","multi-horizon","python","quant","risk-management","stock-analysis","support-resistance","technical-analysis","trading"],"author":{"@type":"Person","name":"ianlyoo"}}</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header role="banner">
+<div class="container">
+<h1>margin-ta</h1>
+<p class="tagline">Read-only technical-analysis pipeline — generate multi-horizon stances with indicator consensus, tiered S/R and market/sector risk dashboard.</p>
+<nav aria-label="Primary">
+<ul>
+<li><a href="https://github.com/ianlyoo/margin-ta">GitHub Repository</a></li>
+<li><a href="https://github.com/ianlyoo/margin-ta/blob/master/README.md">README</a></li>
+<li><a href="https://github.com/ianlyoo/margin-ta/issues">Issues</a></li>
+<li><a href="https://ianlyoo.github.io/margin-ta/">Pages</a></li>
+</ul>
+</nav>
+<nav aria-label="Language">
+<ul>
+<li><a href="https://github.com/ianlyoo/margin-ta/blob/master/README.md" lang="en">English</a> | <a href="https://github.com/ianlyoo/margin-ta/blob/master/README.ko.md" lang="ko">한국어</a></li>
+</ul>
+</nav>
+</div>
+</header>
+<main id="main">
+<div class="container">
+<section aria-labelledby="overview-heading">
+<h2 id="overview-heading">Overview</h2>
+<p>A read-only technical-analysis pipeline for US and Korean equities (and crypto pairs). Combines 30+ vectorized indicators, multi-horizon daily/weekly/monthly stances, an indicator-consensus layer, tiered support/resistance detection, and a macro market/sector risk dashboard into a single CLI — and doubles as the analysis engine behind an MCP server.</p>
+<ul>
+<li>Python 3.10+, <code>yfinance</code> + <code>pykrx</code> public data by default</li>
+<li>30+ vectorized indicators (SMA/EMA, MACD, RSI, Stochastic, ADX, Bollinger, ATR, Ichimoku and more)</li>
+<li>Never places orders — every output is decision-support data</li>
+</ul>
+<p><a href="https://github.com/ianlyoo/margin-ta/blob/master/README.md">README</a> — <a href="https://github.com/ianlyoo/margin-ta">Repository</a> — <a href="https://github.com/ianlyoo/margin-ta/issues">Issues</a> — <a href="https://ianlyoo.github.io/margin-ta/">Pages canonical</a></p>
+</section>
+
+<section aria-labelledby="install-heading">
+<h2 id="install-heading">Quick start</h2>
+<pre><code>pip install -r requirements.txt
+python margin_ta.py --ticker AAPL
+python margin_ta.py --ticker 005930.KS --json
+python margin_ta.py --help</code></pre>
+<p>MCP server: see <a href="https://github.com/ianlyoo/margin-ta/blob/master/README.md">README</a> for <code>mcp</code> integration. Charts and JSON outputs are written alongside the console table.</p>
+</section>
+
+<section aria-labelledby="architecture-heading">
+<h2 id="architecture-heading">Architecture — 6 layers</h2>
+<table>
+<thead><tr><th>Layer</th><th>Module(s)</th><th>Responsibility</th></tr></thead>
+<tbody>
+<tr><td>L0 Orchestration</td><td><code>margin_ta.py</code></td><td>Ticker validation, provider selection, pipeline flow</td></tr>
+<tr><td>L1 Data</td><td><code>layer1_data</code>, <code>layer1_market</code></td><td>2y daily OHLCV + metadata (market cap, sector, beta); market-regime fetch</td></tr>
+<tr><td>L2 Indicators</td><td><code>layer2_indicators</code></td><td>30+ vectorized indicators via pandas <code>ta</code> and TA-Lib</td></tr>
+<tr><td>L3 Signals</td><td><code>layer3_signals</code>, <code>layer3_consensus</code></td><td>Tiered S/R, Entry Score (0–100), consensus, multi-horizon stances</td></tr>
+<tr><td>L4 Pricing</td><td><code>layer4_pricing</code></td><td>Trigger-based entry plans, ATR stops, tiered targets, risk/reward</td></tr>
+<tr><td>L5 Output</td><td><code>layer5_output</code></td><td>Rich console tables, chart PNG, JSON, TradingView links</td></tr>
+</tbody>
+</table>
+<p>Multi-horizon stances (short/mid/long) collapse into <code>aligned_bull</code>, <code>aligned_bear</code>, <code>mixed_pullback</code>, <code>mixed_rally</code>, or <code>mixed</code>. Horizons with insufficient history report <code>insufficient_data</code>.</p>
+</section>
+
+<section aria-labelledby="features-heading">
+<h2 id="features-heading">Features</h2>
+<ul>
+<li>Multi-horizon analysis — daily, weekly (∼60 bars), monthly (∼36 months) stances</li>
+<li>Indicator consensus — directional agreement across 30+ indicators</li>
+<li>Tiered support/resistance — near / intermediate / major</li>
+<li>Market &amp; sector risk — 0–100 risk score, regime <code>calm</code>/<code>caution</code>/<code>stress</code>/<code>crisis</code></li>
+<li>Rich output — console, PNG chart, JSON, TradingView deep links</li>
+</ul>
+</section>
+
+<section aria-labelledby="links-heading">
+<h2 id="links-heading">Project links</h2>
+<ul>
+<li><a href="https://github.com/ianlyoo/margin-ta">Repository: https://github.com/ianlyoo/margin-ta</a></li>
+<li><a href="https://github.com/ianlyoo/margin-ta/issues">Issues</a></li>
+<li><a href="https://ianlyoo.github.io/margin-ta/">Pages canonical: https://ianlyoo.github.io/margin-ta/</a></li>
+<li><a href="https://github.com/ianlyoo/margin-ta/blob/master/LICENSE">License: MIT</a></li>
+<li><a href="https://github.com/ianlyoo/margin-ta/blob/master/README.md">README</a></li>
+</ul>
+</section>
+
+<section aria-labelledby="license-heading">
+<h2 id="license-heading">License and ownership</h2>
+<p>Owner: <a href="https://github.com/ianlyoo">ianlyoo</a> — License: <a href="https://spdx.org/licenses/MIT">MIT</a> — Version: 3.0.0 — Language: Python</p>
+<div class="limitations" role="note" aria-label="Limitations">
+<p><strong>Limitations and scope:</strong> Read-only analysis — never places orders. Data from public providers (<code>yfinance</code>, <code>pykrx</code>) may be delayed or incomplete; verify before any decision. No investment advice. Past indicator performance does not predict future results. Market regimes and thresholds are heuristic.</p>
+</div>
+</section>
+</div>
+</main>
+<footer role="contentinfo">
+<div class="container">
+<p>© 2026 ianlyoo — <a href="https://github.com/ianlyoo/margin-ta">margin-ta</a> — <a href="https://spdx.org/licenses/MIT">MIT</a> — <a href="https://ianlyoo.github.io/margin-ta/sitemap.xml">Sitemap</a> — <a href="https://github.com/ianlyoo/margin-ta/blob/master/README.md">README</a></p>
+</div>
+</footer>
+</body>
+</html>
