@@ -1,4 +1,4 @@
-﻿[build-system]
+[build-system]
 requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
@@ -66,6 +66,8 @@ py-modules = [
   "layer5_output",
   "margin_ta",
   "market_risk",
+  "paths",
+  "price_targets",
   "quick_crypto_ta",
   "scan_nightly",
   "timeframes",

@@ -4,9 +4,8 @@ Layer 4 — Pricing v4.0: 트리거 기반 진입 전략 엔진
 전략을 "성격(Aggressive/Safe)"이 아니라 "트리거 유형(Support Bounce/Trend Confirm/Breakout)"으로 분류.
 각 전략은 구체적 진입 조건, 맞춤형 목표가, 홀딩 기간, 무효화 조건을 포함.
 """
-import math
-
 import numpy as np
+from price_targets import _krw_tick_size, _round_price, make_target, resistance_targets
 
 # ─── 전략 유형 정의 ─────────────────────────────────────────────
 
@@ -81,40 +80,6 @@ def _format_price(value: float | None, currency: str = "USD") -> str:
     if currency == "USD":
         return f"${value:,.2f}"
     return f"{value:,.2f} {currency}"
-
-
-def _krw_tick_size(price: float) -> int:
-    if price < 2_000:
-        return 1
-    if price < 5_000:
-        return 5
-    if price < 20_000:
-        return 10
-    if price < 50_000:
-        return 50
-    if price < 200_000:
-        return 100
-    if price < 500_000:
-        return 500
-    return 1_000
-
-
-def _round_price(value: float, currency: str = "USD", direction: str = "nearest") -> float:
-    currency = str(currency or "USD").upper()
-    if currency == "KRW":
-        tick = _krw_tick_size(value)
-        match direction:
-            case "up":
-                return float(math.ceil(value / tick) * tick)
-            case "down":
-                return float(math.floor(value / tick) * tick)
-            case "nearest":
-                return float(round(value / tick) * tick)
-            case _:
-                return float(round(value / tick) * tick)
-    if currency == "JPY":
-        return float(round(value))
-    return round(float(value), 2)
 
 
 def _first_rr(plan: dict) -> float | None:
@@ -258,30 +223,15 @@ def _eval_support_bounce(
         risk_val = entry - stop
         rr = (r["price"] - entry) / risk_val if risk_val > 0 else 0
         if rr >= 1.0:
-            target_price = _round_price(r["price"], currency, "down")
-            targets.append({"level": 1, "price": target_price,
-                            "gain_pct": round((target_price / entry - 1) * 100, 2),
-                            "source": r.get("source", "resistance")})
+            targets.append(make_target(1, r["price"], entry, r.get("source", "resistance"), currency))
             break
     if not targets:
         # R:R 1.0 이상 저항 없으면 5% ext
-        t1 = round(entry * 1.05, 2)
-        targets.append({"level": 1, "price": _round_price(t1, currency, "down"), "gain_pct": round((t1 / entry - 1) * 100, 2), "source": "5% ext"})
+        targets.append(make_target(1, round(entry * 1.05, 2), entry, "5% ext", currency))
     # 2차 타겟 추가
-    if targets:
-        used_prices = {t["price"] for t in targets}
-        next_resistances = sorted(
-            [r for r in resistances if r.get("price", 0) > targets[0]["price"]],
-            key=lambda r: r["price"],
-        )
-        for next_r in next_resistances:
-            target_price = _round_price(next_r["price"], currency, "down")
-            if target_price in used_prices:
-                continue
-            targets.append({"level": 2, "price": target_price,
-                            "gain_pct": round((target_price / entry - 1) * 100, 2),
-                            "source": next_r.get("source", "resistance")})
-            break
+    targets.extend(resistance_targets(
+        entry, resistances, currency, limit=1, above=targets[0]["price"], first_level=2,
+    ))
 
     # 품질 점수 (0-100)
     quality = 40
@@ -364,21 +314,9 @@ def _eval_trend_confirm(
     risk_pct = round((entry - stop) / entry * 100, 2)
 
     # 타겟: 다음 2개 저항 (중기)
-    targets = []
-    used = set()
-    for i in range(2):
-        r = _closest(entry if i == 0 else targets[-1]["price"], resistances, "above")
-        if r:
-            target_price = _round_price(r["price"], currency, "down")
-            if target_price in used:
-                continue
-            targets.append({"level": i + 1, "price": target_price,
-                            "gain_pct": round((target_price / entry - 1) * 100, 2),
-                            "source": r.get("source", f"resistance")})
-            used.add(target_price)
+    targets = resistance_targets(entry, resistances, currency, limit=2)
     if not targets:
-        t1 = _round_price(current_price * 1.05, currency, "down")
-        targets.append({"level": 1, "price": t1, "gain_pct": round((t1 / entry - 1) * 100, 2), "source": "5% ext"})
+        targets.append(make_target(1, current_price * 1.05, entry, "5% ext", currency))
 
     # 품질
     quality = 50
@@ -463,15 +401,10 @@ def _eval_breakout(
     targets = []
     r2 = _closest(resist["price"], resistances, "above")
     if r2:
-        target_price = _round_price(r2["price"], currency, "down")
-        targets.append({"level": 1, "price": target_price,
-                        "gain_pct": round((target_price / entry - 1) * 100, 2),
-                        "source": r2.get("source", "next resistance")})
+        targets.append(make_target(1, r2["price"], entry, r2.get("source", "next resistance"), currency))
     high_52w = float(df.High.iloc[-252:].max()) if len(df) >= 252 else float(df.High.max())
     if high_52w > entry * 1.1:
-        targets.append({"level": 2, "price": _round_price(high_52w, currency, "down"),
-                        "gain_pct": round((high_52w / entry - 1) * 100, 2),
-                        "source": "52-week high"})
+        targets.append(make_target(2, high_52w, entry, "52-week high", currency))
 
     # 품질
     quality = 45
